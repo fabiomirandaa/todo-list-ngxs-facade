@@ -1,0 +1,31 @@
+<div class="col">
+  <div *ngIf="todos">
+    <table class="table table-striped text-center">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Completed</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let todo of todos | async">
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.title }}</td>
+          <td>
+            <i class="oi oi-circle-check" *ngIf="todo.completed"></i>
+            <i class="oi oi-clock" *ngIf="!todo.completed"></i>
+          </td>
+          <td>
+            <button class="btn btn-primary" (click)="editTodo(todo)">Edit</button>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteTodo(todo.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
