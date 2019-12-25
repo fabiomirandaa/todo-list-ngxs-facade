@@ -5,13 +5,7 @@ import {
   Selector
 } from '@ngxs/store';
 import { Todo } from '../models/Todo';
-import {
-  AddTodo,
-  DeleteTodo,
-  GetTodos,
-  SetSelectedTodo,
-  UpdateTodo
-} from '../actions/todo.action';
+import { TodoActions } from '../actions/todo.action';
 import { TodoService } from '../todo.service';
 import { tap } from 'rxjs/operators';
 
@@ -42,7 +36,7 @@ export class TodoState {
     return state.selectedTodo;
   }
 
-  @Action(GetTodos)
+  @Action(TodoActions.Get)
   getTodos({ getState, setState }: StateContext<TodoStateModel>) {
     return this.todoService.fetchTodos()
       .pipe(tap((result) => {
@@ -54,8 +48,8 @@ export class TodoState {
       }));
   }
 
-  @Action(AddTodo)
-  addTodo({ getState, patchState }: StateContext<TodoStateModel>, { payload }: AddTodo) {
+  @Action(TodoActions.Add)
+  addTodo({ getState, patchState }: StateContext<TodoStateModel>, { payload }: TodoActions.Add) {
     return this.todoService.addTodo(payload)
       .pipe(tap((result) => {
         const state = getState();
@@ -65,17 +59,17 @@ export class TodoState {
       }));
   }
 
-  @Action(UpdateTodo)
-  updateTodo({ getState, setState }: StateContext<TodoStateModel>, { payload, id }: UpdateTodo) {
+  @Action(TodoActions.Update)
+  updateTodo(ctx: StateContext<TodoStateModel>, { payload, id }: TodoActions.Update) {
     return this.todoService.updateTodo(payload, id)
       .pipe(
         tap((result) => {
           console.log(result);
-          const state = getState();
+          const state = ctx.getState();
           const todoList = [...state.todos];
           const todoIndex = todoList.findIndex((item) => item.id === id);
           todoList[todoIndex] = result;
-          setState({
+          ctx.setState({
             ...state,
             todos: todoList,
           });
@@ -84,8 +78,8 @@ export class TodoState {
   }
 
 
-  @Action(DeleteTodo)
-  deleteTodo({ getState, setState }: StateContext<TodoStateModel>, { id }: DeleteTodo) {
+  @Action(TodoActions.Delete)
+  deleteTodo({ getState, setState }: StateContext<TodoStateModel>, { id }: TodoActions.Delete) {
     return this.todoService.deleteTodo(id)
       .pipe(tap(() => {
         const state = getState();
@@ -97,8 +91,8 @@ export class TodoState {
       }));
   }
 
-  @Action(SetSelectedTodo)
-  setSelectedTodoId({ getState, setState }: StateContext<TodoStateModel>, { payload }: SetSelectedTodo) {
+  @Action(TodoActions.SetSelected)
+  setSelectedTodoId({ getState, setState }: StateContext<TodoStateModel>, { payload }: TodoActions.SetSelected) {
     const state = getState();
     setState({
       ...state,

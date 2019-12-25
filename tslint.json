@@ -151,7 +151,7 @@
       "component-class-suffix": true,
       "directive-class-suffix": true,
       "no-namespace": [
-          true,
+          false,
           "allow-declarations"
       ]
   }
