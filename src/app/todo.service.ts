@@ -12,7 +12,7 @@ export class TodoService {
   }
 
   fetchTodos() {
-    return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos');
+    return this.http.get<Todo[]>('http://localhost:3000/todos');
   }
 
   deleteTodo(id: number) {
