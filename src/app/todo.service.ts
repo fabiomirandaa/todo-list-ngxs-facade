@@ -20,7 +20,7 @@ export class TodoService {
   }
 
   deleteTodo(id: number) {
-    return this.http.delete(`${this._baseUrl}/${id}`);
+    return this.http.delete(`${this._baseUrl}/todos/${id}`);
   }
 
   addTodo(payload: Todo) {
