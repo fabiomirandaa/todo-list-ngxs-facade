@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoState } from '../states/todo.state';
-import { AddTodo, SetSelectedTodo, UpdateTodo } from '../actions/todo.action';
+import { TodoActions } from '../actions/todo.action';
 import { Observable } from 'rxjs';
 import { Todo } from '../models/Todo';
 
@@ -52,12 +52,12 @@ export class FormComponent implements OnInit {
 
   onSubmit() {
     if (this.editTodo) {
-      this.store.dispatch(new UpdateTodo(this.todoForm.value, this.todoForm.value.id))
+      this.store.dispatch(new TodoActions.Update(this.todoForm.value, this.todoForm.value.id))
         .subscribe(() => {
           this.clearForm();
         });
     } else {
-      this.store.dispatch(new AddTodo(this.todoForm.value))
+      this.store.dispatch(new TodoActions.Add(this.todoForm.value))
         .subscribe(() => {
           this.clearForm();
         });
@@ -66,6 +66,6 @@ export class FormComponent implements OnInit {
 
   clearForm() {
     this.todoForm.reset();
-    this.store.dispatch(new SetSelectedTodo(null));
+    this.store.dispatch(new TodoActions.SetSelected(null));
   }
 }

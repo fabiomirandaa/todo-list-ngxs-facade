@@ -3,7 +3,7 @@ import { TodoState } from '../states/todo.state';
 import { Select, Store } from '@ngxs/store';
 import { Todo } from '../models/Todo';
 import { Observable } from 'rxjs';
-import { DeleteTodo, GetTodos, SetSelectedTodo } from '../actions/todo.action';
+import { TodoActions } from '../actions/todo.action';
 
 @Component({
   selector: 'app-list',
@@ -17,15 +17,15 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new GetTodos());
+    this.store.dispatch(new TodoActions.Get());
   }
 
   deleteTodo(id: number) {
-    this.store.dispatch(new DeleteTodo(id));
+    this.store.dispatch(new TodoActions.Delete(id));
   }
 
   editTodo(payload: Todo) {
-    this.store.dispatch(new SetSelectedTodo(payload));
+    this.store.dispatch(new TodoActions.SetSelected(payload));
   }
 
 }
