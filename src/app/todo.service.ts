@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Todo } from './models/Todo';
 import { environment } from 'src/environments/environment';
-import { nanoid } from 'nanoid';
+import * as nanoid from 'nanoid';
 
 @Injectable({
   providedIn: 'root'
