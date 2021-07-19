@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import {
   State,
   Action,
@@ -21,6 +22,7 @@ export class TodoStateModel {
     selectedTodo: null
   }
 })
+@Injectable()
 export class TodoState {
 
   constructor(private todoService: TodoService) {
